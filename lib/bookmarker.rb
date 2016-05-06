@@ -10,18 +10,16 @@ def make_head
 end
 
 def make_body input
+  spaces = "    "
   open_tags = tag_hash ["ul", "a", "li"]
   lines = input.split("\n")
   out = "  <body>\n"
   lines.each do |l|
     if l.include? "<DL>" then
-      if open_tags["ul"] then
-        out << "</ul>\n"
-        out << "<ul>\n"
-      else
-        out << "<ul>\n"
-        open_tags["ul"] = true
-      end
+      out << "<ul>\n"
+    end
+    if l.include? "</DL" then
+      out << "</ul>\n"
     end
     if l.include? "<A HREF" then
       out << "<li>\n"
