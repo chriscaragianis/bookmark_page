@@ -63,18 +63,28 @@ RSpec.describe "make_body" do
     end
 
     it "nests <li> tags in <ul> tags" do
-      safe = false
+      safe = 0
       @lines.each do |l|
-        if l.include?("<li") && !safe then
+        if l.include?("<li") && safe <= 0 then
           fail
         end
         if l.include?("<ul") then
-          safe = true
+          safe += 1
         end
         if l.include?("</ul>") then
-          safe = false
+          safe -= 1
         end
       end
+    end
+
+    it "correctly adds link address" do
+      expect(@open_tag_hash["<a"][0].include? "https://github.com").to be true
+    end
+
+    it "adds link text" do
+      target = @lines.select {|a| a.include? "github"}
+      i = @lines.index target[0]
+      expect(@lines[i+1].include? "How people build").to be true
     end
 
   def tag_hasher ary, tag_list

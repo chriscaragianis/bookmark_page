@@ -20,15 +20,14 @@ def make_body input
       spaces << "  "
     end
     if l.include? "</DL" then
-      spaces.chop!.chop!
+      spaces.chomp("  ")
       out << spaces << "</ul>\n"
     end
     if l.include? "<A HREF" then
       out << spaces << "<li>\n"
-      spaces << "  "
-      out << spaces << "<a href>\n"
-      out << spaces << "</a>\n"
-      spaces.chop!.chop!
+      out << spaces << "  <a href=\"#{get_link l}\">\n"
+      out << spaces << "    #{get_link_text l}\n"
+      out << spaces << "  </a>\n"
       out << spaces << "</li>\n"
     end
   end
@@ -55,4 +54,14 @@ def tag_hash tag_list
   out
 end
 
+def get_link str
+  chunk_1 = str.split "HREF=\""
+  chunk_2 = chunk_1[1].split("\"")
+  chunk_2[0]
+end
+
+def get_link_text str
+  chunk = str.split ">"
+  chunk[-1].chomp("</A")
+end
 
