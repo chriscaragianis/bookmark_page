@@ -16,16 +16,20 @@ def make_body input
   out = "  <body>\n"
   lines.each do |l|
     if l.include? "<DL>" then
-      out << "<ul>\n"
+      out << spaces << "<ul>\n"
+      spaces << "  "
     end
     if l.include? "</DL" then
-      out << "</ul>\n"
+      spaces.chop!.chop!
+      out << spaces << "</ul>\n"
     end
     if l.include? "<A HREF" then
-      out << "<li>\n"
-      out << "<a href>\n"
-      out << "</a>\n"
-      out << "</li>\n"
+      out << spaces << "<li>\n"
+      spaces << "  "
+      out << spaces << "<a href>\n"
+      out << spaces << "</a>\n"
+      spaces.chop!.chop!
+      out << spaces << "</li>\n"
     end
   end
   open_tags.keys.each do |tag|
