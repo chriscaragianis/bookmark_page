@@ -16,7 +16,7 @@ def make_body input
   out = "  <body>\n"
   lines.each do |l|
     if l.include? "<DL>" then
-      out << spaces << "<ul>\n"
+      out << spaces << "<ul class=\"bookmark-folder\">\n"
       spaces << "  "
     end
     if l.include? "</DL" then
@@ -24,7 +24,7 @@ def make_body input
       out << spaces << "</ul>\n"
     end
     if l.include? "<A HREF" then
-      out << spaces << "<li>\n"
+      out << spaces << "<li class=\"bookmark\">\n"
       out << spaces << "  <a href=\"#{get_link l}\">\n"
       out << spaces << "    #{get_link_text l}\n"
       out << spaces << "  </a>\n"
@@ -42,7 +42,14 @@ def make_body input
       out << "    <script type=\"text/javascript\" src=\"src/#{fname}\"></script>\n"
     end
   end
-  out << "  </body>"
+  out << "  </body>\n"
+  out
+end
+
+def make_page input
+  out = make_head
+  out << make_body(input)
+  out << "</html>"
   out
 end
 
@@ -64,4 +71,5 @@ def get_link_text str
   chunk = str.split ">"
   chunk[-1].chomp("</A")
 end
+
 
