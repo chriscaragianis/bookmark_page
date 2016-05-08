@@ -20,4 +20,7 @@ class BookmarkPage
       raise "File not found: #{filename}"
     end
   end
+
+  def write
+  end
 end
