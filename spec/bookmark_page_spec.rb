@@ -22,7 +22,12 @@ RSpec.describe "BookmarkPage" do
     end
 
     it "exists" do
-      expect(@b.read "")
+      expect(@b.read "testdata/one.html")
+    end
+
+    it "updates data" do
+      @b.read "testdata/one.html"
+      expect(@b.data[0..4]).to eq("hello")
     end
   end
 end
