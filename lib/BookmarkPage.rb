@@ -13,6 +13,6 @@ class BookmarkPage
     end
   end
 
-  def parse_export str
+  def read filename
   end
 end

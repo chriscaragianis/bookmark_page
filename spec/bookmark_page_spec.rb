@@ -15,4 +15,14 @@ RSpec.describe "BookmarkPage" do
       expect(BookmarkPage.new(file: "testdata/one.html").data)
     end
   end
+
+  context "#read" do
+    before :each do
+      @b = BookmarkPage.new
+    end
+
+    it "exists" do
+      expect(@b.read "")
+    end
+  end
 end
