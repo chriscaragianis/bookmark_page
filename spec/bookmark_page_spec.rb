@@ -10,5 +10,9 @@ RSpec.describe "BookmarkPage" do
     it "exists" do
       expect(@b)
     end
+
+    it "loads a file if given" do
+      expect(BookmarkPage.new(file: "testdata/one.html").data)
+    end
   end
 end
