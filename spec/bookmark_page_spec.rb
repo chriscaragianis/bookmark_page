@@ -34,4 +34,14 @@ RSpec.describe "BookmarkPage" do
       expect{@b.read("nofile")}.to raise_error("File not found: nofile")
     end
   end
+
+  context "#write" do
+    before :each do
+      @b = BookmarkPage.new(file: "testdata/two.html")
+    end
+
+    it "exists" do
+      expect(@b.write)
+    end
+  end
 end
