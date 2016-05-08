@@ -13,7 +13,11 @@ class BookmarkPage
   end
 
   def read filename
-    f = File.open(filename, 'rb')
-    @data = f.read
+    if File.exist?(filename) then
+      f = File.open(filename, 'rb')
+      @data = f.read
+    else
+      raise "File not found: #{filename}"
+    end
   end
 end

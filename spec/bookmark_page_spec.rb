@@ -29,5 +29,9 @@ RSpec.describe "BookmarkPage" do
       @b.read "testdata/one.html"
       expect(@b.data[0..4]).to eq("hello")
     end
+
+    it "raises 'File not found: {filename}' if no such file" do
+      expect{@b.read("nofile")}.to raise_error("File not found: nofile")
+    end
   end
 end
