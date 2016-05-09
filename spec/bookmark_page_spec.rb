@@ -1,4 +1,4 @@
-require "BookmarkPage"
+require "bookmark_page"
 
 RSpec::Matchers.define :precede do |expected, ary|
   match do |actual|

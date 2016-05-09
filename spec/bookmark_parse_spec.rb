@@ -1,4 +1,4 @@
-require "BookmarkParse"
+require "bookmark_parse"
 
 RSpec.describe "BookmarkParse" do
 
@@ -28,7 +28,7 @@ RSpec.describe "BookmarkParse" do
     subject { d.new }
 
     it "exists" do
-      expect(subject.get_link_href "")
+      expect(subject.get_link_href %(<a href="address">af</a>))
     end
 
     it "returns the address of a link" do
