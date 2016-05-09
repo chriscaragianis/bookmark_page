@@ -35,6 +35,7 @@ RSpec.describe "BookmarkPage" do
     end
   end
 
+<<<<<<< HEAD
   context "#parse" do
     before :all do
       @b = BookmarkPage.new(file: "testdata/two.html")
@@ -51,6 +52,15 @@ RSpec.describe "BookmarkPage" do
 
     it "writes a doctype tag" do
       expect(@subject_lines[0]).to eq("<!DOCTYPE html>")
+=======
+  context "#write" do
+    before :each do
+      @b = BookmarkPage.new(file: "testdata/two.html")
+    end
+
+    it "exists" do
+      expect(@b.write)
+>>>>>>> 10839a3d802064c89e703e3bd4c5506ee3c99778
     end
   end
 end
