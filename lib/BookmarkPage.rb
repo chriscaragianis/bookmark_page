@@ -22,6 +22,6 @@ class BookmarkPage
   end
 
   def parse
-    "<!DOCTYPE html>"
+    "<!DOCTYPE html>\n  <head>\n  </head>"
   end
 end

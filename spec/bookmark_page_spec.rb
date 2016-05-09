@@ -52,5 +52,13 @@ RSpec.describe "BookmarkPage" do
     it "writes a doctype tag" do
       expect(@subject_lines[0]).to eq("<!DOCTYPE html>")
     end
+
+    it "writes a head element" do
+      expect(@subject_lines.include?("  <head>")).to be true
+      expect(@subject_lines.include?("  </head>")).to be true
+      open = @subject_lines.index("  <head>")
+      close = @subject_lines.index("  </head>")
+      expect(open).to be < close
+    end
   end
 end
