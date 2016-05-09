@@ -25,6 +25,11 @@ class BookmarkPage
     end
   end
 
+  def load_assets assets_dir
+    @css = Dir.glob("assets_dir/**/*.css")
+    @js = Dir.glob("assets_dir/**/*.js")
+  end
+
   def parse
     "<!DOCTYPE html>\n  <head>\n  </head>"
   end

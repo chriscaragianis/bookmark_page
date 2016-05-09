@@ -41,6 +41,16 @@ RSpec.describe "BookmarkPage" do
     end
   end
 
+  context "#load_assets" do
+    before :each do
+      @b = BookmarkPage.new
+    end
+
+    it "exists" do
+      expect(@b.load_assets "testdata/assets")
+    end
+  end
+
   context "#parse" do
     before :all do
       @b = BookmarkPage.new(file: "testdata/two.html")
