@@ -34,6 +34,11 @@ class BookmarkPage
   end
 
   def parse
-    "<!DOCTYPE html>\n  <head>\n  </head>"
+    out = "<!DOCTYPE html>\n  <head>\n"
+    @css.each do |f|
+      out << %Q[    <link rel="stylesheet" href="#{f}">\n]
+    end
+    out << "  </head>"
+    out
   end
 end

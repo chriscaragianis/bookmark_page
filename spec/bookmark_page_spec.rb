@@ -1,5 +1,11 @@
 require "BookmarkPage"
 
+RSpec::Matchers.define :precede do |expected, ary|
+  match do |actual|
+    ary.index(expected) > ary.index(actual)
+  end
+end
+
 RSpec.describe "BookmarkPage" do
 
   context "#new" do
@@ -56,19 +62,21 @@ RSpec.describe "BookmarkPage" do
       expect(@b.js.sort).to eq(["testdata/assets/js/script2.js", "testdata/assets/script1.js"])
     end
 
-    it "raises 'Dir not found: {assets_dir}' if no sudh dir" do
+    it "raises 'Dir not found: {assets_dir}' if no such dir" do
       expect{@b.load_assets("nodir")}.to raise_error("Dir not found: nodir")
     end
   end
 
   context "#parse" do
     before :all do
-      @b = BookmarkPage.new(file: "testdata/two.html")
+      @b = BookmarkPage.new(file: "testdata/two.html", assets_dir: "testdata/assets")
       f = File.open("testdata/parse_output.html", 'rb')
       @out = f.read
       @out_lines = @out.split("\n")
       @subject = @b.parse
       @subject_lines = @subject.split("\n")
+      @link_1 = %Q[    <link rel="stylesheet" href="testdata/assets/css/style1.css">]
+      @link_2 = %Q[    <link rel="stylesheet" href="testdata/assets/style2.css">]
     end
 
     it "exists" do
@@ -85,6 +93,12 @@ RSpec.describe "BookmarkPage" do
       open = @subject_lines.index("  <head>")
       close = @subject_lines.index("  </head>")
       expect(open).to be < close
+    end
+
+    it "links stylesheets" do
+      expect(@subject_lines.include?(@link_1)).to be true
+      expect(@subject_lines.include?(@link_2)).to be true
+      expect(@link_1).to precede("  </head>", @subject_lines)
     end
   end
 end
