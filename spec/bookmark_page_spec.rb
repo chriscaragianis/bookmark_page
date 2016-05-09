@@ -14,6 +14,12 @@ RSpec.describe "BookmarkPage" do
     it "loads a file if given" do
       expect(BookmarkPage.new(file: "testdata/one.html").data)
     end
+
+    it "loads assets if given" do
+      @b = BookmarkPage.new(assets_dir: "testdata/assets")
+      expect(@b.css.sort).to eq(["testdata/assets/css/style1.css", "testdata/assets/style2.css"])
+      expect(@b.js.sort).to eq(["testdata/assets/js/script2.js", "testdata/assets/script1.js"])
+    end
   end
 
   context "#read" do

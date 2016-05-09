@@ -3,12 +3,16 @@ require 'BookmarkParse'
 class BookmarkPage
 
   include BookmarkParse
-  attr_accessor :data
+  attr_accessor :data, :css, :js
 
   def initialize(params = {})
     params.each { |key,value| instance_variable_set("@#{key}", value) }
     if params[:file] then
       read(params[:file])
+    end
+    if params[:assets_dir] then
+      @css = Dir.glob("#{params[:assets_dir]}/**/*.css")
+      @js = Dir.glob("#{params[:assets_dir]}/**/*.js")
     end
   end
 
