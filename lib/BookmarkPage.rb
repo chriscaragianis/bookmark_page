@@ -21,6 +21,7 @@ class BookmarkPage
     end
   end
 
-  def write
+  def parse
+    "<!DOCTYPE html>"
   end
 end
