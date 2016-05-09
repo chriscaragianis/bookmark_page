@@ -12,7 +12,7 @@ RSpec.describe "BookmarkPage" do
     end
 
     it "loads a file if given" do
-      expect(BookmarkPage.new(file: "testdata/one.html").data)
+      expect(BookmarkPage.new(file: "testdata/one.html").data[0..4]).to eq("hello")
     end
 
     it "loads assets if given" do
@@ -48,6 +48,12 @@ RSpec.describe "BookmarkPage" do
 
     it "exists" do
       expect(@b.load_assets "testdata/assets")
+    end
+
+    it "loads assets" do
+      @b.load_assets "testdata/assets"
+      expect(@b.css.sort).to eq(["testdata/assets/css/style1.css", "testdata/assets/style2.css"])
+      expect(@b.js.sort).to eq(["testdata/assets/js/script2.js", "testdata/assets/script1.js"])
     end
   end
 

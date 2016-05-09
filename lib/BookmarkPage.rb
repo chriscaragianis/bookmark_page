@@ -26,8 +26,8 @@ class BookmarkPage
   end
 
   def load_assets assets_dir
-    @css = Dir.glob("assets_dir/**/*.css")
-    @js = Dir.glob("assets_dir/**/*.js")
+    @css = Dir.glob("#{assets_dir}/**/*.css")
+    @js = Dir.glob("#{assets_dir}/**/*.js")
   end
 
   def parse
