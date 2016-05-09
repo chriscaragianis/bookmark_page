@@ -55,6 +55,10 @@ RSpec.describe "BookmarkPage" do
       expect(@b.css.sort).to eq(["testdata/assets/css/style1.css", "testdata/assets/style2.css"])
       expect(@b.js.sort).to eq(["testdata/assets/js/script2.js", "testdata/assets/script1.js"])
     end
+
+    it "raises 'Dir not found: {assets_dir}' if no sudh dir" do
+      expect{@b.load_assets("nodir")}.to raise_error("Dir not found: nodir")
+    end
   end
 
   context "#parse" do
