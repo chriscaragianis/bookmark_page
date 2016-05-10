@@ -15,6 +15,7 @@ class BookmarkPage
     raise "File not found: #{filename}" unless File.exist?(filename)
     f = File.open(filename, 'rb')
     @data = f.read
+    @data_lines = @data.split("\n")
   end
 
   def load_assets(assets_dir)
@@ -30,6 +31,9 @@ class BookmarkPage
     end
     out << "  </head>\n"
     out << "  <body>\n"
+    @data_lines.each do |l|
+      out << "<ul>\n" if l.include?('<DL')
+    end
     @js.each do |f|
       out << %(    <script type="text/javascript" src="#{f}"></script>\n)
     end

@@ -72,7 +72,7 @@ RSpec.describe 'BookmarkPage' do
 
   context '#parse' do
     before :all do
-      @b = BookmarkPage.new(file: 'testdata/two.html',
+      @b = BookmarkPage.new(file: 'testdata/bookmarks.html',
                             assets_dir: 'testdata/assets')
       f = File.open('testdata/parse_output.html', 'rb')
       @out = f.read
@@ -112,6 +112,10 @@ RSpec.describe 'BookmarkPage' do
       expect(@subject_lines).to include(@script_2)
       expect('  <body>').to precede(@script_1, @subject_lines)
       expect(@script_1).to precede('  </body>', @subject_lines)
+    end
+
+    it 'creates <ul> from folders' do
+      expect(@subject_lines.select { |l| l.include?('<ul') }.count).to eq(26)
     end
   end
 end
