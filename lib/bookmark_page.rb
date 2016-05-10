@@ -28,7 +28,11 @@ class BookmarkPage
     @css.each do |f|
       out << %(    <link rel="stylesheet" href="#{f}">\n)
     end
-    out << '  </head>'
-    out
+    out << "  </head>\n"
+    out << "  <body>\n"
+    @js.each do |f|
+      out << %(    <script type="text/javascript" src="#{f}"></script>\n)
+    end
+    out << "  </body>\n"
   end
 end

@@ -81,6 +81,9 @@ RSpec.describe 'BookmarkPage' do
       @subject_lines = @subject.split("\n")
       @link_1 = %(    <link rel="stylesheet" href="testdata/assets/css/style1.css">)
       @link_2 = %(    <link rel="stylesheet" href="testdata/assets/style2.css">)
+      @script_1 = %(    <script type="text/javascript" src="testdata/assets/script1.js"></script>)
+      @script_2 = %(    <script type="text/javascript" src="testdata/assets/js/script2.js"></script>)
+
     end
 
     it 'exists' do
@@ -92,17 +95,23 @@ RSpec.describe 'BookmarkPage' do
     end
 
     it 'writes a head element' do
-      expect(@subject_lines.include?('  <head>')).to be true
-      expect(@subject_lines.include?('  </head>')).to be true
-      open = @subject_lines.index('  <head>')
-      close = @subject_lines.index('  </head>')
-      expect(open).to be < close
+      expect(@subject_lines).to include('  <head>')
+      expect(@subject_lines).to include('  </head>')
+      expect('  <head>').to precede('  </head>', @subject_lines)
     end
 
     it 'links stylesheets' do
-      expect(@subject_lines.include?(@link_1)).to be true
-      expect(@subject_lines.include?(@link_2)).to be true
+      expect(@subject_lines).to include(@link_1)
+      expect(@subject_lines).to include(@link_2)
+      expect('  <head>').to precede(@link_1, @subject_lines)
       expect(@link_1).to precede('  </head>', @subject_lines)
+    end
+
+    it 'adds scripts' do
+      expect(@subject_lines).to include(@script_1)
+      expect(@subject_lines).to include(@script_2)
+      expect('  <body>').to precede(@script_1, @subject_lines)
+      expect(@script_1).to precede('  </body>', @subject_lines)
     end
   end
 end
