@@ -5,6 +5,6 @@ module BookmarkParse
   end
 
   def get_link_href(str)
-    str[/ref=("|')[^("|')]*/i][6..-1]
+    str[/href=("|')[^("|')]*/i][6..-1]
   end
 end
