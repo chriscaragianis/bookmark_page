@@ -117,5 +117,9 @@ RSpec.describe 'BookmarkPage' do
     it 'creates <ul> from folders' do
       expect(@subject_lines.select { |l| l.include?('<ul') }.count).to eq(26)
     end
+
+    it 'creates links from bookmarks' do
+      expect(@subject_lines.select { |l| l.include?('<a') }.count).to eq(134)
+    end
   end
 end

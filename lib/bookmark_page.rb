@@ -33,6 +33,7 @@ class BookmarkPage
     out << "  <body>\n"
     @data_lines.each do |l|
       out << "<ul>\n" if l.include?('<DL')
+      out << %(<a href=""></a>\n) if l.include?('<A HREF')
     end
     @js.each do |f|
       out << %(    <script type="text/javascript" src="#{f}"></script>\n)
