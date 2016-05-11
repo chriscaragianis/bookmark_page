@@ -126,5 +126,10 @@ RSpec.describe 'BookmarkPage' do
       example = @subject_lines.select{ |l| l.include?('<a') }[0]
       expect(example).to include(%(href="https://www.airpair.com/ruby-on-rails/posts/a-week-with-a-rails-security-strategy?utm_content=buffer2c657&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer"))
     end
+
+    it 'adds correct link text' do
+      example = @subject_lines.select{ |l| l.include?('<a') }[2]
+      expect(example).to include(%(>Nitrous<)) 
+    end
   end
 end
