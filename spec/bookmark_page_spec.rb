@@ -121,5 +121,10 @@ RSpec.describe 'BookmarkPage' do
     it 'creates links from bookmarks' do
       expect(@subject_lines.select { |l| l.include?('<a') }.count).to eq(134)
     end
+
+    it 'adds correct href to links' do
+      example = @subject_lines.select{ |l| l.include?('<a') }[0]
+      expect(example).to include(%(href="https://www.airpair.com/ruby-on-rails/posts/a-week-with-a-rails-security-strategy?utm_content=buffer2c657&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer"))
+    end
   end
 end
