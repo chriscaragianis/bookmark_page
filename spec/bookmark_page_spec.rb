@@ -74,16 +74,12 @@ RSpec.describe 'BookmarkPage' do
     before :all do
       @b = BookmarkPage.new(file: 'testdata/bookmarks.html',
                             assets_dir: 'testdata/assets')
-      f = File.open('testdata/parse_output.html', 'rb')
-      @out = f.read
-      @out_lines = @out.split("\n")
       @subject = @b.parse
-      @subject_lines = @subject.split("\n")
-      @link_1 = %(    <link rel="stylesheet" href="testdata/assets/css/style1.css">)
-      @link_2 = %(    <link rel="stylesheet" href="testdata/assets/style2.css">)
-      @script_1 = %(    <script type="text/javascript" src="testdata/assets/script1.js"></script>)
-      @script_2 = %(    <script type="text/javascript" src="testdata/assets/js/script2.js"></script>)
-
+      @subject_lines = @subject.split("\n").map(&:strip)
+      @link_1 = %(<link rel="stylesheet" href="testdata/assets/css/style1.css">)
+      @link_2 = %(<link rel="stylesheet" href="testdata/assets/style2.css">)
+      @script_1 = %(<script type="text/javascript" src="testdata/assets/script1.js"></script>)
+      @script_2 = %(<script type="text/javascript" src="testdata/assets/js/script2.js"></script>)
     end
 
     it 'exists' do
@@ -95,23 +91,23 @@ RSpec.describe 'BookmarkPage' do
     end
 
     it 'writes a head element' do
-      expect(@subject_lines).to include('  <head>')
-      expect(@subject_lines).to include('  </head>')
-      expect('  <head>').to precede('  </head>', @subject_lines)
+      expect(@subject_lines).to include('<head>')
+      expect(@subject_lines).to include('</head>')
+      expect('<head>').to precede('</head>', @subject_lines)
     end
 
     it 'links stylesheets' do
       expect(@subject_lines).to include(@link_1)
       expect(@subject_lines).to include(@link_2)
-      expect('  <head>').to precede(@link_1, @subject_lines)
-      expect(@link_1).to precede('  </head>', @subject_lines)
+      expect('<head>').to precede(@link_1, @subject_lines)
+      expect(@link_1).to precede('</head>', @subject_lines)
     end
 
     it 'adds scripts' do
       expect(@subject_lines).to include(@script_1)
       expect(@subject_lines).to include(@script_2)
-      expect('  <body>').to precede(@script_1, @subject_lines)
-      expect(@script_1).to precede('  </body>', @subject_lines)
+      expect('<body>').to precede(@script_1, @subject_lines)
+      expect(@script_1).to precede('</body>', @subject_lines)
     end
 
     it 'creates <ul> from folders' do
@@ -123,13 +119,19 @@ RSpec.describe 'BookmarkPage' do
     end
 
     it 'adds correct href to links' do
-      example = @subject_lines.select{ |l| l.include?('<a') }[0]
+      example = @subject_lines.select { |l| l.include?('<a') } [0]
       expect(example).to include(%(href="https://www.airpair.com/ruby-on-rails/posts/a-week-with-a-rails-security-strategy?utm_content=buffer2c657&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer"))
     end
 
     it 'adds correct link text' do
-      example = @subject_lines.select{ |l| l.include?('<a') }[2]
-      expect(example).to include(%(>Nitrous<)) 
+      example = @subject_lines.select { |l| l.include?('<a') } [2]
+      expect(example).to include(%(>Nitrous<))
+    end
+
+    it 'gives proper headers to folders' do
+      expect(@subject_lines).to include('<h1>Bookmarks Bar</h1>')
+      expect(@subject_lines).to include('<h2>Back End</h2>')
+      expect(@subject_lines).to include('<h3>Typography</h3>')
     end
   end
 end

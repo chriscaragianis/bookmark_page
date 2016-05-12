@@ -27,9 +27,23 @@ class BookmarkPage
   end
 
   def parse
+    depth = 0
     @data_lines.each do |l|
-      @bookmarks << [get_link_href(l), get_tag_content(l)] if l.include? 'HREF'
-      @bookmarks << 'UL' if l.include?('<DL>')
+      if l.include?('<DT>')
+        if l.include? 'HREF'
+          @bookmarks << [get_link_href(l), get_tag_content(l)]
+        else
+          @bookmarks << ['HEADING', depth, get_tag_content(l)]
+        end
+      end
+      if l.include?('<DL>')
+        @bookmarks << 'UL'
+        depth += 1
+      end
+      if l.include?('</DL>')
+        @bookmarks << '/UL'
+        depth -= 1
+      end
     end
     template_file = File.open('lib/out.html.erb', 'rb')
     template = template_file.read

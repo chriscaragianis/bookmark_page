@@ -10,8 +10,12 @@
     <% @bookmarks.each do |b| %>
       <% if b == 'UL' then %>
         <ul>
+      <% elsif b == '/UL' then %>
+        </ul>
+      <% elsif b[0] == "HEADING" %>
+        <h<%= b[1] %>><%= b[2] %></h<%= b[1] %>>
       <% else %>
-        <a href="<%= b[0] %>"><%= b[1] %></a>
+        <li><a href="<%= b[0] %>"><%= b[1] %></a></li>
       <% end %>
     <% end %>
     <% @js.each do |j| %>
