@@ -1,14 +1,16 @@
 require 'bookmark_parse'
+require 'erb'
 
 # :nodoc:
 class BookmarkPage
   include BookmarkParse
-  attr_accessor :data, :css, :js
+  attr_accessor :data, :css, :js, :bookmarks
 
   def initialize(params = {})
     params.each { |key, value| instance_variable_set("@#{key}", value) }
     read params[:file] if params[:file]
     load_assets params[:assets_dir] if params[:assets_dir]
+    @bookmarks = []
   end
 
   def read(filename)
@@ -25,19 +27,13 @@ class BookmarkPage
   end
 
   def parse
-    out = "<!DOCTYPE html>\n  <head>\n"
-    @css.each do |f|
-      out << %(    <link rel="stylesheet" href="#{f}">\n)
-    end
-    out << "  </head>\n"
-    out << "  <body>\n"
     @data_lines.each do |l|
-      out << "<ul>\n" if l.include?('<DL')
-      out << %(<a href="#{get_link_href l}">#{get_tag_content l}</a>\n) if l.include?('<A HREF')
+      @bookmarks << [get_link_href(l), get_tag_content(l)] if l.include? 'HREF'
+      @bookmarks << 'UL' if l.include?('<DL>')
     end
-    @js.each do |f|
-      out << %(    <script type="text/javascript" src="#{f}"></script>\n)
-    end
-    out << "  </body>\n"
+    template_file = File.open('lib/out.html.erb', 'rb')
+    template = template_file.read
+    renderer = ERB.new(template)
+    renderer.result(binding)
   end
 end

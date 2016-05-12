@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <% @css.each do |c| %>
+    <link rel="stylesheet" href="<%= c %>">
+    <% end %>
+  </head>
+  <body>
+    <% @bookmarks.each do |b| %>
+      <% if b == 'UL' then %>
+        <ul>
+      <% else %>
+        <a href="<%= b[0] %>"><%= b[1] %></a>
+      <% end %>
+    <% end %>
+    <% @js.each do |j| %>
+    <script type="text/javascript" src="<%= j %>"></script>
+    <% end %>
+  </body>
+</html
