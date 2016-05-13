@@ -2,6 +2,7 @@
 
 <html>
   <head>
+    <meta charset="UTF-8">
     <% @css.each do |c| %>
     <link rel="stylesheet" href="<%= c %>">
     <% end %>
@@ -15,7 +16,10 @@
       <% elsif b[0] == "HEADING" %>
         <h<%= b[1] %> class="<%= @folder_head_class %>"><%= b[2] %></h<%= b[1] %>>
       <% else %>
-        <li class="<%= @link_class %>"><a href="<%= b[0] %>"><%= b[1] %></a></li>
+        <li class="<%= @link_class %>">
+          <img src="<%= b[2] %>">
+          <a href="<%= b[0] %>"><%= b[1] %></a>
+        </li>
       <% end %>
     <% end %>
     <% @js.each do |j| %>

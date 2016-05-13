@@ -1,4 +1,4 @@
-require 'bookmark_parse'
+require_relative 'bookmark_parse'
 require 'erb'
 
 # :nodoc:
@@ -34,7 +34,7 @@ class BookmarkPage
     @data_lines.each do |l|
       if l.include?('<DT>')
         if l.include? 'HREF'
-          @bookmarks << [get_link_href(l), get_tag_content(l)]
+          @bookmarks << [get_link_href(l), get_tag_content(l), get_icon_data(l)]
         else
           @bookmarks << ['HEADING', depth, get_tag_content(l)]
         end

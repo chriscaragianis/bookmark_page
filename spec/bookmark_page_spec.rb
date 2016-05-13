@@ -24,8 +24,10 @@ RSpec.describe 'BookmarkPage' do
       @b = BookmarkPage.new(assets_dir: 'testdata/assets')
       expect(@b.css.sort).to eq ['testdata/assets/css/style1.css',
                                  'testdata/assets/style2.css']
-      expect(@b.js.sort).to eq ['testdata/assets/js/script2.js',
-                                'testdata/assets/script1.js']
+      expect(@b.js.sort).to eq ['testdata/assets/js/jquery.js',
+                                'testdata/assets/js/script2.js',
+                                'testdata/assets/script1.js'
+                               ]
     end
   end
 
@@ -61,8 +63,10 @@ RSpec.describe 'BookmarkPage' do
       @b.load_assets 'testdata/assets'
       expect(@b.css.sort).to eq(['testdata/assets/css/style1.css',
                                  'testdata/assets/style2.css'])
-      expect(@b.js.sort).to eq(['testdata/assets/js/script2.js',
-                                'testdata/assets/script1.js'])
+      expect(@b.js.sort).to eq(['testdata/assets/js/jquery.js',
+                                'testdata/assets/js/script2.js',
+                                'testdata/assets/script1.js',
+                                ])
     end
 
     it 'raises "Dir not found: {assets_dir}" if no such dir' do
