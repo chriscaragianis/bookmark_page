@@ -8,8 +8,16 @@ class BookmarkPage
 
   def initialize(params = {})
     params.each { |key, value| instance_variable_set("@#{key}", value) }
-    read params[:file] if params[:file]
-    load_assets params[:assets_dir] if params[:assets_dir]
+    if params[:file]
+      read params[:file]
+    else
+      read 'bookmarks.html'
+    end
+    if params[:assets_dir]
+      load_assets params[:assets_dir]
+    else
+      load_assets '.'
+    end
     @bookmarks = []
     @folder_class ||= 'folder'
     @folder_head_class ||= 'folder-head'
