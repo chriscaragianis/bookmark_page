@@ -11,6 +11,9 @@ class BookmarkPage
     read params[:file] if params[:file]
     load_assets params[:assets_dir] if params[:assets_dir]
     @bookmarks = []
+    @folder_class ||= 'folder'
+    @folder_head_class ||= 'folder-head'
+    @link_class ||= 'link'
   end
 
   def read(filename)

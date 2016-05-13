@@ -9,13 +9,13 @@
   <body>
     <% @bookmarks.each do |b| %>
       <% if b == 'UL' then %>
-        <ul>
+        <ul class="<%= @folder_class %>">
       <% elsif b == '/UL' then %>
         </ul>
       <% elsif b[0] == "HEADING" %>
-        <h<%= b[1] %>><%= b[2] %></h<%= b[1] %>>
+        <h<%= b[1] %> class="<%= @folder_head_class %>"><%= b[2] %></h<%= b[1] %>>
       <% else %>
-        <li><a href="<%= b[0] %>"><%= b[1] %></a></li>
+        <li class="<%= @link_class %>"><a href="<%= b[0] %>"><%= b[1] %></a></li>
       <% end %>
     <% end %>
     <% @js.each do |j| %>

@@ -129,9 +129,30 @@ RSpec.describe 'BookmarkPage' do
     end
 
     it 'gives proper headers to folders' do
-      expect(@subject_lines).to include('<h1>Bookmarks Bar</h1>')
-      expect(@subject_lines).to include('<h2>Back End</h2>')
-      expect(@subject_lines).to include('<h3>Typography</h3>')
+      expect(@subject_lines).to include('<h1 class="folder-head">Bookmarks Bar</h1>')
+      expect(@subject_lines).to include('<h2 class="folder-head">Back End</h2>')
+      expect(@subject_lines).to include('<h3 class="folder-head">Typography</h3>')
+    end
+
+    it 'adds user defined classes' do
+      @b = BookmarkPage.new(file: 'testdata/bookmarks.html',
+                            assets_dir: 'testdata/assets',
+                            folder_class: '_folder',
+                            folder_head_class:  '_folder-head',
+                            link_class: '_link')
+      @subject = @b.parse
+      @subject_lines = @subject.split("\n").map(&:strip)
+      link_line = @subject_lines.select { |l| l.include?('<li ') }[0]
+      expect(@subject_lines).to include('<ul class="_folder">')
+      expect(@subject_lines).to include('<h1 class="_folder-head">Bookmarks Bar</h1>')
+      expect(link_line).to include('<li class="_link">')
+    end
+
+    it 'adds default classes' do
+      link_line = @subject_lines.select { |l| l.include?('<li ') }[0]
+      expect(@subject_lines).to include('<ul class="folder">')
+      expect(@subject_lines).to include('<h1 class="folder-head">Bookmarks Bar</h1>')
+      expect(link_line).to include('<li class="link">')
     end
   end
 end
