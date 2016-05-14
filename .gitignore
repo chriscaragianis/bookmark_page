@@ -4,4 +4,5 @@ test.html
 new_test.html
 make_test.rb
 *.gem
-
+lib/*
+spec/*

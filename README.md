@@ -5,6 +5,16 @@ your browser.
 
 ##Installation
 
+```zsh
+$ gem install bookmarker
+```
+
+then
+
+```ruby
+require 'bookmarker'
+```
+
 ##Usage
 
 ```ruby
