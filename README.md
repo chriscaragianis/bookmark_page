@@ -3,7 +3,20 @@
 A gem for making nice webpages out of bookmarks exported from
 your browser.
 
+##Example
+
+Here is an [example](https://chriscaragianis.github.io/bookmarker) of the output with some simple styling and a script for folding/unfolding folders.
 ##Installation
+
+```zsh
+$ gem install bookmarker
+```
+
+then
+
+```ruby
+require 'bookmarker'
+```
 
 ##Usage
 
