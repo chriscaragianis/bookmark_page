@@ -1,5 +1,4 @@
-lannguage: ruby
 rvm:
- - 2.2
-# uncomment and edit the following line if your project needs to run something other than `rake`:
-script: bundle exec rspec spec
+ - 1.9.2
+ - jruby-19mode
+script: rspec spec
