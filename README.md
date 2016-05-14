@@ -8,7 +8,7 @@ your browser.
 ##Usage
 
 ```ruby
-bmarks = BookmarkPage.new(options)
+bmarks = Bookmarker.new(options)
 ```
 
 where

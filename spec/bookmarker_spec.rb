@@ -1,4 +1,4 @@
-require 'bookmark_page'
+require 'bookmarker'
 
 RSpec::Matchers.define :precede do |expected, ary|
   match do |actual|
@@ -6,42 +6,42 @@ RSpec::Matchers.define :precede do |expected, ary|
   end
 end
 
-RSpec.describe 'BookmarkPage' do
+RSpec.describe 'Bookmarker' do
   context '#new' do
     before :each do
       @fname = 'testdata/one.html'
     end
 
     it 'exists' do
-      expect(@b = BookmarkPage.new)
+      expect(@b = Bookmarker.new)
     end
 
     it 'loads a file if given' do
-      expect(BookmarkPage.new(file: @fname).data[0..4]).to eq 'hello'
+      expect(Bookmarker.new(file: @fname).data[0..4]).to eq 'hello'
     end
 
     it 'loads assets if given' do
-      @b = BookmarkPage.new(assets_dir: 'testdata/assets')
-      expect(@b.css.sort).to eq ['testdata/assets/css/style1.css',
-                                 'testdata/assets/style2.css']
-      expect(@b.js.sort).to eq ['testdata/assets/js/jquery.js',
-                                'testdata/assets/js/script2.js',
-                                'testdata/assets/script1.js'
+      @b = Bookmarker.new(assets_dir: './testdata/assets')
+      expect(@b.css.sort).to eq ['./testdata/assets/css/style1.css',
+                                 './testdata/assets/style2.css']
+      expect(@b.js.sort).to eq ['./testdata/assets/js/jquery.js',
+                                './testdata/assets/js/script2.js',
+                                './testdata/assets/script1.js'
                                ]
     end
   end
 
   context '#read' do
     before :each do
-      @b = BookmarkPage.new
+      @b = Bookmarker.new
     end
 
     it 'exists' do
-      expect(@b.read('testdata/one.html'))
+      expect(@b.read('./testdata/one.html'))
     end
 
     it 'updates data' do
-      @b.read 'testdata/one.html'
+      @b.read './testdata/one.html'
       expect(@b.data[0..4]).to eq('hello')
     end
 
@@ -52,20 +52,20 @@ RSpec.describe 'BookmarkPage' do
 
   context '#load_assets' do
     before :each do
-      @b = BookmarkPage.new
+      @b = Bookmarker.new
     end
 
     it 'exists' do
-      expect(@b.load_assets('testdata/assets'))
+      expect(@b.load_assets('./testdata/assets'))
     end
 
     it 'loads assets' do
-      @b.load_assets 'testdata/assets'
-      expect(@b.css.sort).to eq(['testdata/assets/css/style1.css',
-                                 'testdata/assets/style2.css'])
-      expect(@b.js.sort).to eq(['testdata/assets/js/jquery.js',
-                                'testdata/assets/js/script2.js',
-                                'testdata/assets/script1.js',
+      @b.load_assets './testdata/assets'
+      expect(@b.css.sort).to eq(['./testdata/assets/css/style1.css',
+                                 './testdata/assets/style2.css'])
+      expect(@b.js.sort).to eq(['./testdata/assets/js/jquery.js',
+                                './testdata/assets/js/script2.js',
+                                './testdata/assets/script1.js',
                                 ])
     end
 
@@ -76,14 +76,14 @@ RSpec.describe 'BookmarkPage' do
 
   context '#parse' do
     before :all do
-      @b = BookmarkPage.new(file: 'testdata/bookmarks.html',
-                            assets_dir: 'testdata/assets')
+      @b = Bookmarker.new(file: './testdata/bookmarks.html',
+                            assets_dir: './testdata/assets')
       @subject = @b.parse
       @subject_lines = @subject.split("\n").map(&:strip)
-      @link_1 = %(<link rel="stylesheet" href="testdata/assets/css/style1.css">)
-      @link_2 = %(<link rel="stylesheet" href="testdata/assets/style2.css">)
-      @script_1 = %(<script type="text/javascript" src="testdata/assets/script1.js"></script>)
-      @script_2 = %(<script type="text/javascript" src="testdata/assets/js/script2.js"></script>)
+      @link_1 = %(<link rel="stylesheet" href="./testdata/assets/css/style1.css">)
+      @link_2 = %(<link rel="stylesheet" href="./testdata/assets/style2.css">)
+      @script_1 = %(<script type="text/javascript" src="./testdata/assets/script1.js"></script>)
+      @script_2 = %(<script type="text/javascript" src="./testdata/assets/js/script2.js"></script>)
     end
 
     it 'exists' do
@@ -139,8 +139,8 @@ RSpec.describe 'BookmarkPage' do
     end
 
     it 'adds user defined classes' do
-      @b = BookmarkPage.new(file: 'testdata/bookmarks.html',
-                            assets_dir: 'testdata/assets',
+      @b = Bookmarker.new(file: './testdata/bookmarks.html',
+                            assets_dir: './testdata/assets',
                             folder_class: '_folder',
                             folder_head_class:  '_folder-head',
                             link_class: '_link')
