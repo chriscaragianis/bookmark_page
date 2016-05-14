@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   s.name      = 'bookmark_page'
-  s.version   = '0.0.1'
+  s.version   = '0.0.2'
   s.date      = '2016-05-13'
-  s.summary   = 'Bookmarker creates nice looking web pages from bookmarks exported from your browser'
+  s.summary   = 'BookmarkPage creates nice looking web pages from bookmarks exported from your browser'
   s.authors   = ['Chris Caragianis']
   s.email     = 'chriscaragianis@gmail.com'
   s.files     = ['lib/bookmark_parse.rb',
