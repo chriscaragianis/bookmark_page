@@ -1,4 +1,4 @@
-require 'bookmarker'
+require 'bookmark_page'
 
 RSpec::Matchers.define :precede do |expected, ary|
   match do |actual|
@@ -6,22 +6,22 @@ RSpec::Matchers.define :precede do |expected, ary|
   end
 end
 
-RSpec.describe 'Bookmarker' do
+RSpec.describe 'BookmarkPage' do
   context '#new' do
     before :each do
       @fname = 'testdata/one.html'
     end
 
     it 'exists' do
-      expect(@b = Bookmarker.new)
+      expect(@b = BookmarkPage.new)
     end
 
     it 'loads a file if given' do
-      expect(Bookmarker.new(file: @fname).data[0..4]).to eq 'hello'
+      expect(BookmarkPage.new(file: @fname).data[0..4]).to eq 'hello'
     end
 
     it 'loads assets if given' do
-      @b = Bookmarker.new(assets_dir: './testdata/assets')
+      @b = BookmarkPage.new(assets_dir: './testdata/assets')
       expect(@b.css.sort).to eq ['./testdata/assets/css/style1.css',
                                  './testdata/assets/style2.css']
       expect(@b.js.sort).to eq ['./testdata/assets/js/jquery.js',
@@ -33,7 +33,7 @@ RSpec.describe 'Bookmarker' do
 
   context '#read' do
     before :each do
-      @b = Bookmarker.new
+      @b = BookmarkPage.new
     end
 
     it 'exists' do
@@ -52,7 +52,7 @@ RSpec.describe 'Bookmarker' do
 
   context '#load_assets' do
     before :each do
-      @b = Bookmarker.new
+      @b = BookmarkPage.new
     end
 
     it 'exists' do
@@ -76,7 +76,7 @@ RSpec.describe 'Bookmarker' do
 
   context '#parse' do
     before :all do
-      @b = Bookmarker.new(file: './testdata/bookmarks.html',
+      @b = BookmarkPage.new(file: './testdata/bookmarks.html',
                             assets_dir: './testdata/assets')
       @subject = @b.parse
       @subject_lines = @subject.split("\n").map(&:strip)
@@ -139,7 +139,7 @@ RSpec.describe 'Bookmarker' do
     end
 
     it 'adds user defined classes' do
-      @b = Bookmarker.new(file: './testdata/bookmarks.html',
+      @b = BookmarkPage.new(file: './testdata/bookmarks.html',
                             assets_dir: './testdata/assets',
                             folder_class: '_folder',
                             folder_head_class:  '_folder-head',

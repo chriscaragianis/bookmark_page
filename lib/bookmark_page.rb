@@ -2,7 +2,7 @@ require_relative 'bookmark_parse'
 require 'erb'
 
 # :nodoc:
-class Bookmarker
+class BookmarkPage
   include BookmarkParse
   attr_accessor :data, :css, :js, :bookmarks
 
